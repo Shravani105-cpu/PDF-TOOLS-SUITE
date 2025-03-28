@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Page Numbers - PDF Tool Suite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        :root {
+            --background: #fefae0;
+            --box:  #fffbc7;
+            --text: #444444;
+            --secondary: #faedcd;
+            --button:#9ab491;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --border-glow: rgba(255, 0, 255, 0.8);
+        }
+
+        * {
+            font-family: 'Roboto', sans-serif;
+            text-transform: capitalize;
+            text-decoration: none;
+            outline: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        *::selection {
+            background: var(--pink);
+            color: #fff;
+        }
+
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: url(one.jpg) no-repeat center center fixed;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        header {
+            width: 96%;
+            height: 10%;
+            background: var(--box);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 10px;
+            color: black;
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            z-index: 1000;
+            transition: 0.3s ease-in-out;
+        }
+
+        header:hover {
+            box-shadow: 0 0 10px;
+        }
+
+        .header-active {
+            top: 0;
+            width: 100%;
+            border-radius: 0;
+            box-shadow: 0 .1rem .3rem rgba(0, 0, 0, .3);
+        }
+
+        header .navbar ul {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            list-style: none;
+
+        }
+
+        header .navbar ul li {
+            margin: 0 1rem;
+        }
+
+        header .navbar ul li a {
+            color: var(--text);
+            font-size: 2rem;
+            font-weight: 600;
+            transition: color 0.3s ease-in-out;
+        }
+
+        header .navbar ul li a.active,
+        header .navbar ul li a:hover {
+            color: var(--button);
+        }
+
+        header .logo {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        header .logo i {
+            height: 10px;
+            padding: 4 .2rem;
+            color: #df4747;
+
+        }
+
+        header .fa-bars {
+            font-size: 3rem;
+            color: var(--text);
+            cursor: pointer;
+            display: none;
+            transition: .2s;
+        }
+
+        h2 {
+            margin-top: 170px;
+            font-size: 2rem;
+        }
+
+        #drop-area {
+            width: 500px;
+            height: 350px;
+            border: 3px dashed #000000;
+            padding: 20px;
+            margin: 30px auto;
+            margin-top: 10px;
+            background-color: var(--box);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: black;
+            font-size: 1.5rem;
+        }
+
+        #drop-area p {
+            color: #373d3b;
+            font-weight: bold;
+            font-size: medium;
+        }
+
+        #drop-area .button {
+            color: #373d3b;
+        }
+
+        label {
+            background-color: var(--button);
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 10px auto;
+        }
+
+        label:hover {
+            background-color: var(--secondary);
+        }
+
+
+        .controls {
+            margin-top: 10px;
+        }
+
+        select,
+        button {
+            background-color: var(--button);
+            color: black;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: var(--secondary);
+        }
+
+        #file-name {
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 14px;
+            color: var(--white);
+        }
+
+        header .fa-times {
+            transform: rotate(180deg);
+            color: var(--text);
+        }
+
+        @media (max-width: 768px) {
+            html {
+                font-size: 55%;
+            }
+
+            body {
+                padding: 20px;
+            }
+
+            header .fa-bars {
+                display: block;
+            }
+
+            header .navbar {
+                position: fixed;
+                top: -100rem;
+                left: 0;
+                width: 100%;
+                background: var(--box);
+                border-radius: 1rem;
+                opacity: 0;
+                transition: .2s linear;
+            }
+
+            header .navbar ul {
+                flex-flow: column;
+                padding: 2rem 0;
+            }
+
+            header .navbar ul li {
+                margin: 1rem 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            header .navbar ul li a {
+                font-size: 2.5rem;
+                display: block;
+            }
+
+            header .nav-toggle {
+                top: 7.9em;
+                opacity: 1;
+                border-radius: 3rem;
+            }
+
+            #drop-area {
+                width: 400px;
+                height: 300px;
+            }
+
+            .home .content p {
+                padding: 1.5rem 2rem;
+            }
+
+            .home::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href=" " class="logo"><i class="fa-solid fa-file-pdf"></i></br>
+            PDF TOOLS SUITE</a>
+        <nav class="navbar">
+            <div class="menu--sm">
+                <span class="menu--sm">
+                    <i class="ico ico--tools"></i></span>
+                <ul>
+                    <li><a href="home.html" class="active">HOME</a></li>
+                    <li><a href="convertPDF.html">CONVERT PDF</a></li>
+                    <li><a href="o.html">COMPRESS IMAGE</a></li>
+                    <li><a href="merge.html">MERGE PDF</a></li>
+                    <li><a href="split.html">SPLIT PDF</a></li>
+                    <li><a href="allpdf.html">ALL PDF TOOLS</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="fas fa-bars"></div>
+    </header>
+    <h2>Add Page Numbers to PDF</h2>
+    <div id="drop-area">
+        <p>Drag & drop PDF files here or click to select</p>
+        <label for="pdfFile"><i class="fa-solid fa-file-pdf"></i> Choose PDF</label>
+        <input type="file" id="pdfFile" accept="application/pdf" style="display: none;">
+        <p id="file-name">No file selected</p>
+
+        <div class="controls">
+            <label for="position">Position</label>
+            <select id="position">
+                <option value="bottom-center">Bottom Center</option>
+                <option value="top-center">Top Center</option>
+                <option value="bottom-left">Bottom Left</option>
+                <option value="bottom-right">Bottom Right</option>
+            </select>
+        </div>
+
+        <button id="add-numbers-btn">Add Page Numbers</button>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.fa-bars').click(function () {
+                $(this).toggleClass('fa-times');
+                $('.navbar').toggleClass('nav-toggle');
+            });
+
+            $(window).on('scroll load', function () {
+                $('.fa-bars').removeClass('fa-times');
+                $('.navbar').removeClass('nav-toggle');
+
+                if ($(window).scrollTop() > 30) {
+                    $('header').addClass('header-active');
+                } else {
+                    $('header').removeClass('header-active');
+                }
+            });
+        });
+    </script>
+
+    <script>
+        document.getElementById('pdfFile').addEventListener('change', function () {
+            const fileNameDisplay = document.getElementById('file-name');
+            if (this.files.length > 0) {
+                fileNameDisplay.textContent = `Selected: ${this.files[0].name}`;
+            } else {
+                fileNameDisplay.textContent = "No file selected";
+            }
+        });
+
+        document.getElementById('add-numbers-btn').addEventListener('click', async () => {
+            const fileInput = document.getElementById('pdfFile');
+            const position = document.getElementById('position').value;
+
+            if (!fileInput.files.length) {
+                alert("Please select a PDF file.");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = async function (event) {
+                try {
+                    const pdfBytes = event.target.result;
+                    const { PDFDocument, rgb } = PDFLib;
+
+                    // Load the PDF
+                    const pdfDoc = await PDFDocument.load(pdfBytes);
+                    const pages = pdfDoc.getPages();
+                    const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+
+                    // Define color (Black for better visibility)
+                    const textColor = rgb(0, 0, 0);
+
+                    // Add page numbers
+                    pages.forEach((page, index) => {
+                        const { width, height } = page.getSize();
+                        const pageNumberText = ` ${index + 1}`;
+                        let x, y;
+
+                        // Set position based on dropdown
+                        switch (position) {
+                            case "bottom-center":
+                                x = width / 2 - 20;
+                                y = 30;
+                                break;
+                            case "top-center":
+                                x = width / 2 - 20;
+                                y = height - 30;
+                                break;
+                            case "bottom-left":
+                                x = 20;
+                                y = 30;
+                                break;
+                            case "bottom-right":
+                                x = width - 60;
+                                y = 30;
+                                break;
+                        }
+
+                        page.drawText(pageNumberText, {
+                            x: x,
+                            y: y,
+                            size: 16, // Increased font size
+                            font: font,
+                            color: textColor,
+                        });
+                    });
+
+                    // Save the new PDF
+                    const modifiedPdfBytes = await pdfDoc.save();
+                    const blob = new Blob([modifiedPdfBytes], { type: "application/pdf" });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'numbered.pdf';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                } catch (error) {
+                    console.error("Error adding page numbers:", error);
+                    alert("Failed to add page numbers. Please try again.");
+                }
+            };
+
+            reader.readAsArrayBuffer(file);
+        });
+    </script>
+</body>
+
+</html>

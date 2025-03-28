@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word to PDF - PDF Tool Suite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        :root {
+            --background: #fefae0;
+            --box:  #fffbc7;
+            --text: #444444;
+            --secondary: #faedcd;
+            --button:#9ab491;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --border-glow: rgba(255, 0, 255, 0.8);
+        }
+
+        * {
+            font-family: 'Roboto', sans-serif;
+            text-transform: capitalize;
+            text-decoration: none;
+            outline: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        *::selection {
+            background: var(--pink);
+            color: #fff;
+        }
+
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+        }
+
+        body {
+            background: url(one.png);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            text-align: center;
+            padding: 40px;
+            color: var(--white);
+            height: 700px;
+        }
+
+        header {
+            width: 96%;
+            height: 10%;
+            background:var(--box);
+            box-shadow: 0 0 10px black; ;
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            z-index: 1000;
+            transition: .2s;
+        }
+
+        .header-active {
+            top: 0;
+            width: 100%;
+            border-radius: 0;
+            box-shadow: 0 .1rem .3rem rgba(0, 0, 0, .3);
+        }
+
+        header .navbar ul {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            list-style: none;
+
+        }
+
+        header .navbar ul li {
+            margin: 0 1rem;
+        }
+
+        header .navbar ul li a {
+            color: var(--text);
+            font-size: 2rem;
+            font-weight: 800;
+            transition: .2s;
+        }
+
+        header .navbar ul li a.active,
+        header .navbar ul li a:hover {
+            color: var(--button);
+        }
+
+        header .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        header .logo i {
+            height: 10px;
+            padding: 4 .2rem;
+            color: #df4747;
+
+        }
+
+        header .fa-bars {
+            font-size: 3rem;
+            color: var(--text);
+            cursor: pointer;
+            display: none;
+            transition: .2s;
+        }
+
+        h2 {
+            margin-top: 160px;
+            font-size: 2.5rem;
+            margin-bottom: 0;
+            color: var(--text);
+        }
+
+        #drop-area {
+            width: 500px;
+            height: 320px;
+            border: 3px dashed #000000;
+            padding: 20px;
+            margin: 20px auto;
+            top: 20px;
+            background-color: var(--box);
+            box-shadow: 0 0 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: black;
+        }
+
+        #drop-area p {
+            font-size: medium;
+            font-weight: bold;
+            margin-top: 20px;
+            color: var(--text);
+        }
+
+        label {
+            background-color: var(--button);
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 25px auto;
+        }
+
+        label:hover {
+            background-color: var(--secondary);
+            box-shadow: 0 0 10px black;
+        }
+
+
+        .controls {
+            margin-top: 10px;
+        }
+
+        select,
+        button {
+            background-color: var(--button);
+            color: black;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 30px;
+        }
+
+        button:hover {
+            background-color: var(--secondary);
+            box-shadow: 0 0 10px black;
+
+        }
+
+        #file-name {
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 14px;
+            color: var(--white);
+        }
+
+        header .fa-times {
+            transform: rotate(180deg);
+            color: var(--text);
+        }
+
+        
+
+        @media (max-width: 768px) {
+            html {
+                font-size: 55%;
+            }
+
+            body {
+                padding: 20px;
+            }
+
+            header .fa-bars {
+                display: block;
+            }
+
+            header .navbar {
+                position: fixed;
+                top: -100rem;
+                left: 0;
+                width: 100%;
+                background: var(--box);
+                border-radius: 1rem;
+                opacity: 0;
+                transition: .2s linear;
+            }
+
+            header .navbar ul {
+                flex-flow: column;
+                padding: 2rem 0;
+            }
+
+            header .navbar ul li {
+                margin: 1rem 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            header .navbar ul li a {
+                font-size: 2.5rem;
+                display: block;
+            }
+
+            header .nav-toggle {
+                top: 7.9rem;
+                opacity: 1;
+                border-radius: 3rem;
+            }
+            h2 {
+                margin-top: 170px;
+            }
+
+            #drop-area {
+                width: 400px;
+                height: 300px;
+                margin-top: 20px;
+            }
+
+            .home .content p {
+                padding: 1.5rem 2rem;
+            }
+
+            .home::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href=" " class="logo"><i class="fa-solid fa-file-pdf"></i></br>
+            PDF TOOLS SUITE</a>
+        <nav class="navbar">
+            <div class="menu--sm">
+                <span class="menu--sm">
+                    <i class="ico ico--tools"></i></span>
+                <ul>
+                    <li><a href="home.html" >HOME</a></li>
+                    <li><a href="convertPDF.html"class="active">CONVERT PDF</a></li>
+                    <li><a href="o.html">COMPRESS IMAGE</a></li>
+                    <li><a href="merge.html">MERGE PDF</a></li>
+                    <li><a href="split.html">SPLIT PDF</a></li>
+                    <li><a href="allpdf.html">ALL PDF TOOLS</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="fas fa-bars"></div>
+    </header>
+    <h2>Convert Word to PDF</h2>
+    <div id="drop-area">
+        <p>Drag & Drop Word file or Click to Select</p>
+        <label for="wordFile"><i class="fa-solid fa-file-word"></i> Choose File</label>
+        <input type="file" id="wordFile" accept=".docx" style="display: none;">
+        <p id="file-name">No file selected</p>
+        <button id="convert-btn">Convert to PDF</button>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.fa-bars').click(function () {
+                $(this).toggleClass('fa-times');
+                $('.navbar').toggleClass('nav-toggle');
+            });
+
+            $(window).on('scroll load', function () {
+                $('.fa-bars').removeClass('fa-times');
+                $('.navbar').removeClass('nav-toggle');
+
+                if ($(window).scrollTop() > 30) {
+                    $('header').addClass('header-active');
+                } else {
+                    $('header').removeClass('header-active');
+                }
+            });
+        });
+    </script>
+    <script>
+        document.getElementById("wordFile").addEventListener("change", function () {
+            document.getElementById("file-name").textContent = this.files[0] ? this.files[0].name : "No file selected";
+        });
+
+        document.getElementById("convert-btn").addEventListener("click", async function () {
+            const fileInput = document.getElementById("wordFile");
+            if (!fileInput.files.length) {
+                alert("Please select a Word file first.");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = async function (event) {
+                const arrayBuffer = event.target.result;
+                try {
+                    // Extract text from the Word file using Mammoth
+                    const result = await mammoth.extractRawText({ arrayBuffer });
+                    const text = result.value;
+
+                    if (!text.trim()) {
+                        alert("Cannot extract text. Try another file.");
+                        return;
+                    }
+
+                    // Create a new PDF document
+                    const pdfDoc = await PDFLib.PDFDocument.create();
+                    const page = pdfDoc.addPage([600, 800]);
+                    const { width, height } = page.getSize();
+                    const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+                    const fontSize = 12;
+
+                    // Split text into lines and add to PDF
+                    const lines = text.split("\n");
+                    let yPosition = height - 50;
+
+                    for (let line of lines) {
+                        if (yPosition > 50) {
+                            page.drawText(line, { x: 50, y: yPosition, font, size: fontSize });
+                            yPosition -= 20; // Adjust line spacing
+                        }
+                    }
+
+                    // Save the PDF and trigger download
+                    const pdfBytes = await pdfDoc.save();
+                    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+                    const url = URL.createObjectURL(blob);
+
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = file.name.replace(".docx", ".pdf"); // Set the filename
+                    document.body.appendChild(a);
+                    a.click();
+
+                    // Clean up
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                } catch (err) {
+                    console.error("Error converting file:", err);
+                    alert("Error processing file. Please try again.");
+                }
+            };
+
+            reader.readAsArrayBuffer(file);
+        });
+    </script>
+</body>
+
+</html>

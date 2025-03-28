@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JPG TO PDF | PDF Tool Suite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        :root {
+            --background: #fefae0;
+            --box:  #fffbc7;
+            --text: #444444;
+            --secondary: #faedcd;
+            --button:#9ab491;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --border-glow: rgba(255, 0, 255, 0.8);
+        }
+
+        * {
+            font-family: 'Roboto', sans-serif;
+            text-transform: capitalize;
+            text-decoration: none;
+            outline: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        *::selection {
+            background: var(--background);
+            color: #fff;
+        }
+
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+        }
+
+        body {
+            background: url(one.png);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: var(--text);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+
+        }
+
+        header {
+            width: 96%;
+            height: 10%;
+            background: var(--box);
+            box-shadow: 0 0 10px black;
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            z-index: 1000;
+            transition: .2s;
+        }
+
+        .header-active {
+            top: 0;
+            width: 100%;
+            border-radius: 0;
+            box-shadow: 0 .1rem .3rem rgba(0, 0, 0, .3);
+        }
+
+        header .navbar ul {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            list-style: none;
+
+        }
+
+        header .navbar ul li {
+            margin: 0 1rem;
+        }
+        .navbar li {
+            float: left;
+        }
+
+        .navbar li a,
+        .dropbtn {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        
+        }
+        /* Dropdown styles */
+        li.dropdown {
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--box);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Dropdown arrow styles */
+        .arrow {
+            font-size: 0.8em;
+            /* Adjust the size of the arrow */
+            margin-left: 5px;
+            /* Space between text and arrow */
+        }
+
+        header .navbar ul li a {
+            color: var(--text);
+            font-size: 2rem;
+            font-weight: 800;
+            transition: .2s;
+        }
+
+        header .navbar ul li a.active,
+        header .navbar ul li a:hover {
+            color: var(--button);
+        }
+
+        header .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        header .logo i {
+            height: 10px;
+            padding: 4 .2rem;
+            color: #df4747;
+
+        }
+
+        header .fa-bars {
+            font-size: 3rem;
+            color: var(--pink);
+            cursor: pointer;
+            display: none;
+            transition: .2s;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+
+        .container {
+            border: 3px dashed #000000;
+            background-color: var(--box);
+            position: relative;
+            top: 90px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px black;
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color:var(--text);
+        }
+
+        button,
+        .upload {
+            width: 200px;
+            margin: 0 auto;
+            position: relative;
+            padding: 10px 20px;
+            font-size: 17px;
+            color: #000000;
+            font-size: bold;
+            display: block;
+            border-radius: 20px;
+            outline: none;
+            background: #9ab491;
+        }
+        .upload:hover{
+            background-color: #f3deaa;
+            box-shadow: 0 0 10px #000000;
+        }
+
+        input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        button {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            margin: 0 auto;
+            padding: 10px 20px;
+            background-color: #9ab491;
+            color: #000000;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover{
+            background-color: #f3deaa;
+            box-shadow: 0 0 10px #000000;
+        }
+
+        
+
+        button:disabled {
+            background-color: #ccc;
+        }
+
+        button:hover {
+            background-color: #f3deaa;
+        }
+
+        #image-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            width: 400px;
+            max-width: 100%;
+            min-height: 200px;
+            background: var(--text);
+            margin: 0 auto;
+            border-radius: 5px;
+        }
+
+        #image-preview img {
+            max-width: 150px;
+            /* Width of each image */
+            height: auto;
+
+            /* Maintain aspect ratio */
+        }
+
+        header .fa-times {
+            transform: rotate(180deg);
+            color: var(--text);
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header,
+        #drop-area,
+        button,
+        label {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+
+        @media (max-width: 768px) {
+            html {
+                font-size: 55%;
+            }
+
+            body {
+                padding: 20px;
+            }
+
+            header .fa-bars {
+                display: block;
+            }
+
+            header .navbar {
+                position: fixed;
+                top: -100rem;
+                left: 0;
+                width: 100%;
+                background: var(--box);
+                border-radius: 1rem;
+                opacity: 0;
+                transition: .2s linear;
+            }
+
+            header .navbar ul {
+                flex-flow: column;
+                padding: 2rem 0;
+            }
+
+            header .navbar ul li {
+                margin: 1rem 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            header .navbar ul li a {
+                font-size: 2.5rem;
+                display: block;
+            }
+
+            header .nav-toggle {
+                top: 7.9em;
+                opacity: 1;
+                border-radius: 3rem;
+            }
+
+            #drop-area {
+                width: 400px;
+                height: 300px;
+            }
+            #image-preview {
+                width: 100%;
+            }
+            .upload{
+                margin: 0 auto;
+            }
+
+            .home .content p {
+                padding: 1.5rem 2rem;
+            }
+
+            .home::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href=" " class="logo"><i class="fa-solid fa-file-pdf"></i></br>
+            PDF TOOLS SUITE</a>
+        <nav class="navbar">
+            <div class="menu--sm">
+                <span class="menu--sm">
+                    <i class="ico ico--tools"></i></span>
+                <ul>
+                    <li><a href="home.html" >HOME</a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="active" class="dropbtn">CONVERT PDF <span class="arrow">▼</span></a>
+                        <div class="dropdown-content">
+                            <a href="convertPDF.html" class="active">JPG TO PDF</a>
+                            <a href="word.html">WORD TO PDF</a>
+                            <a href="PDFWord.html">PDF TO WORD</a>
+                        </div>
+                    </li>
+                    <li><a href="o.html">COMPRESS IMAGE</a></li>
+                    <li><a href="merge.html">MERGE PDF</a></li>
+                    <li><a href="split.html">SPLIT PDF</a></li>
+                    <li><a href="allpdf.html">ALL PDF TOOLS</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="fas fa-bars"></div>
+    </header>
+    <div class="container">
+        <h1>Multiple Images to PDF Converter</h1>
+        <div class="button">
+            <div class="upload">
+                <input type="file" id="image-input" multiple accept="images/*"> Upload Images
+            </div>
+            <br>
+            <div id="image-preview"></div>
+            <br>
+            <button id="generate-pdf">Generate PDF</button>
+        </div>
+    </div>
+
+    <!-- Include jsPDF library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.fa-bars').click(function () {
+                $(this).toggleClass('fa-times');
+                $('.navbar').toggleClass('nav-toggle');
+            });
+
+            $(window).on('scroll load', function () {
+                $('.fa-bars').removeClass('fa-times');
+                $('.navbar').removeClass('nav-toggle');
+
+                if ($(window).scrollTop() > 30) {
+                    $('header').addClass('header-active');
+                } else {
+                    $('header').removeClass('header-active');
+                }
+            });
+        });
+    </script>
+    <script>
+        // Wait until the page is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const imageInput = document.getElementById('image-input');
+            const generatePdfButton = document.getElementById('generate-pdf');
+            const imagePreview = document.getElementById('image-preview');
+            
+
+            // Function to display selected images
+            imageInput.addEventListener('change', (e) => {
+                const files = e.target.files;
+                imagePreview.innerHTML = "";  // Clear the preview section before displaying new images
+
+                // Loop through all selected files and create an image element for each
+                Array.from(files).forEach((file) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.style.maxWidth = '100%'; // Ensure the image fits the container
+                        img.style.maxHeight = '200px'; // Optional height limit for better display
+                        img.style.objectFit = 'contain'; // Maintain aspect ratio
+
+                        // Append each image to the preview container
+                        imagePreview.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);  // Start reading the file
+                });
+            });
+
+            // Function to generate PDF from selected images
+            generatePdfButton.addEventListener('click', () => {
+                const { jsPDF } = window.jspdf;  // Ensure jsPDF is loaded correctly
+                const pdf = new jsPDF();
+
+                const files = imageInput.files;
+                if (files.length === 0) {
+                    alert('Please select some images first!');
+                    return;
+                }
+
+                Array.from(files).forEach((file, index) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const imgData = e.target.result;
+
+                        // If it's not the first image, add a new page
+                        if (index > 0) {
+                            pdf.addPage();
+                        }
+
+                        // Add the image to the PDF (JPEG format, at position x=10, y=10)
+                        pdf.addImage(imgData, 'JPEG', 10, 10, 180, 160);
+
+                        // Save PDF after the last image is added
+                        if (index === files.length - 1) {
+                            // Save the generated PDF
+                            pdf.save('images.pdf');
+                        }
+                    };
+                    reader.onerror = () => {
+                        alert('Error reading the file!');
+                    };
+
+                    // Start reading the file
+                    reader.readAsDataURL(file);
+                });
+            });
+        });
+
+    </script>
+</body>
+
+</html>

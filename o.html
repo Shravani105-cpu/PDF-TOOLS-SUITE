@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMAGE COMPRESSOR</title>
+    <link rel="stylesheet" href="o.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js" defer></script>
+</head>
+<body>
+  <header>
+    <a href=" " class="logo"><i class="fa-solid fa-file-pdf"></i></br>
+        PDF TOOLS SUITE</a>
+    <nav class="navbar">
+        <div class ="menu--sm">
+        <span class="menu--sm">
+            <i class="ico ico--tools"></i></span>
+        <ul>
+            <li><a href="home.html" class="active">HOME</a></li>
+            <li><a href="im2pdf.html">CONVERT PDF</a></li>
+            <li><a href="o.html">COMPRESS IMAGE</a></li>
+            <li><a href="c.html">MERGE PDF</a></li>
+            <li><a href="split.html">SPLIT PDF</a></li>
+            <li><a href="allpdf.html">ALL PDF TOOLS</a></li>
+        </ul>
+        </div>
+    </nav>
+    <div class="fas fa-bars"></div>
+</header>
+    <!-- header end -->
+    <div class="wrapper">
+        <div class="upload-box">
+          <input type="file" accept="image/*" hidden>
+          <img src="https://www.codingnepalweb.com/demos/resize-and-compress-image-javascript/upload-icon.svg" alt="">
+          <p>Browse File to Upload</p>
+        </div>
+        <div class="content">
+            <div class="row sizes">
+              <div class="column width">
+                <label>Width</label>
+                <input type="number">
+              </div>
+              <div class="column height">
+                <label>Height</label>
+                <input type="number">
+              </div>
+            </div>
+            <div class="row checkboxes">
+                <div class="column ratio">
+                  <input type="checkbox" id="ratio" checked>
+                  <label for="ratio">Lock aspect ratio</label>>
+                </div>
+                <div class="column quality">
+                  <input type="checkbox" id="quality">
+                  <label for="quality">Reduce quality</label>
+                </div>
+              </div>
+              <button class="download-btn">Download Image</button>
+            </div>
+        </div>
+</body>
+</html>

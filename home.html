@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF TOOLS SUITE| HOME PAGE</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+        :root {
+            --background: #fefae0;
+            --box:  #fffbc7;
+            --text: #444444;
+            --secondary: #faedcd;
+            --button:#9ab491;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --border-glow: rgba(255, 0, 255, 0.8);
+        }
+
+        * {
+            font-family: 'Roboto', sans-serif;
+            text-transform: capitalize;
+            text-decoration: none;
+            outline: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        *::selection {
+            background: var(--pink);
+            color: #fff;
+        }
+
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+        }
+
+        body {
+            background: url(one.jpg);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 1000px;
+        }
+
+        header {
+            width: 96%;
+            height: 70px;
+            background:var(--box);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 10px ;
+            color: var(--primary);
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            z-index: 1000;
+            transition: 0.3s  ease-in-out;
+        }
+        header:hover {
+            box-shadow: 0 0 30px ;
+        }
+
+        .header-active {
+            top: 0;
+            width: 100%;
+            border-radius: 0;
+            box-shadow: 0 .1rem .3rem rgba(0, 0, 0, .3);
+        }
+
+        header .navbar ul {
+            display: flex;
+            align-items: right;
+            justify-content: space-between;
+            list-style: none;
+
+        }
+
+        header .navbar ul li {
+            margin: 0 1rem;
+        }
+
+        header .navbar ul li a {
+            color: var(--text);
+            font-size: 2rem;
+            font-weight: 600;
+            transition: color 0.3s ease-in-out;
+        }
+
+        header .navbar ul li a.active,
+        header .navbar ul li a:hover {
+            color: #a9bb98;
+        }
+
+        header .logo {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        header .logo i {
+            height: 10px;
+            padding: 4 .2rem;
+            color: #df4747;
+
+        }
+
+        header .fa-bars {
+            font-size: 3rem;
+            color: var(--text);
+            cursor: pointer;
+            display: none;
+            transition: .2s;
+        }
+        /* User Profile Styles */
+.login-btn, .signup-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 500;
+    margin-left: 1rem;
+    transition: all 0.3s;
+}
+
+.login-btn {
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.login-btn:hover {
+    background: #f5f5f5;
+}
+
+.signup-btn {
+    background: #4285f4;
+    color: white;
+    border: 1px solid #4285f4;
+}
+
+.signup-btn:hover {
+    background: #3367d6;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 2rem;
+    top: 70px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    min-width: 160px;
+    z-index: 1000;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 0.8rem 1rem;
+    color: #333;
+    font-size: 1.4rem;
+    text-transform: none;
+}
+
+.dropdown-menu a:hover {
+    background: #f5f5f5;
+    color: #4285f4;
+}
+
+        .home {
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .home .content {
+            display: flex;
+            align-items:qq center;
+            justify-content: center;
+            flex-flow: column;
+            padding-top: 14rem;
+            padding-bottom: 8rem;
+            text-align: center;
+        }
+
+        .home .content h1 {
+            font-size: 5rem;
+            color: var(--text);
+            padding: 0 1rem;
+            text-shadow: 0 .3rem .5rem rgba(0, 0, 0, .3);
+            text-transform: uppercase;
+        }
+
+        .home .content p {
+            font-size: 2rem;
+            color: #373d3b;
+            padding: 1rem 25rem;
+        }
+
+        .home .content button {
+            height: 4rem;
+            width: 20rem;
+            border-radius: 5rem;
+            background: var(--pink);
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: .2s;
+            border: none;
+            box-shadow: 0 .3rem .5rem rgba(0, 0, 0, .3);
+
+        }
+
+        .home .box-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .home .box-container .box {
+            width: 25rem;
+            height: 25rem;
+            justify-content: space-between;
+            background: var(--box);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 10px ;
+            color: var(--primary);
+            text-align: center;
+            margin: 2rem;
+            border-radius: 1rem;
+            cursor: pointer;
+        }
+
+        .home .box-container .box i {
+            height: 6rem;
+            width: 6rem;
+            line-height: 6rem;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 3rem;
+            margin: 2rem 0;
+            color: #fff;
+            background: var(--violet);
+            transition: .2s;
+        }
+
+        .home .box-container svg {
+            margin: 2rem 0;
+        }
+
+        .home .box-container .box h3 {
+            font-size: 2rem;
+            color:var(--text);
+            transform: .2s;
+        }
+
+        .home .box-container .box p {
+            font-size: 1.3rem;
+            padding: 2rem;
+            color: var(--text);
+        }
+
+        .home .box-container .box:hover i {
+            background: var(--pink);
+        }
+
+        .home .box-container .box:hover h3 {
+            color: var(--text);
+        }
+
+        
+
+        .footer {
+            width: 100%;
+            min-height: 100px;
+            padding: 20px 80px;
+            margin: 0;
+            background: #484872;
+            text-align: center;
+
+        }
+
+        .footer p {
+            color: whitesmoke;
+            margin: 20px auto;
+        }
+
+
+        .header .fa-times {
+            transform: rotate(180deg);
+            color: var(--voilet);
+        }
+
+
+        @media (max-width: 768px) {
+            html {
+                font-size: 55%;
+            }
+            body {
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+                display: block;
+            }
+
+            header .fa-bars {
+                display: block;
+                color: var(--text);
+                size: 2rem;
+            }
+            header .fa-bars.fa-times {
+                color: var(--text);
+            }
+            header .navbar {
+                position: fixed;
+                top: -100rem;
+                left: 0;
+                width: 100%;
+                background: var(--box);
+                box-shadow: 0 0 10px;
+                color: black;
+                backdrop-filter: blur(10px);
+                border-radius: 1rem;
+                opacity: 0;
+                transition: .2s linear;
+            }
+
+            header .navbar ul {
+                flex-flow: column;
+                padding: 2rem 0;
+            }
+
+            header .navbar ul li {
+                margin: 1rem 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            header .navbar ul li a {
+                color: var(--text);
+                background-color: var(--background-light);
+                font-size: 3rem;
+                display: block;
+            }
+
+            header .nav-toggle {
+                top: 7.9em;
+                opacity: 1;
+                border-radius: 3rem;
+            }
+
+            .home .content p {
+                padding: 1.5rem 2rem;
+            }
+
+            .home::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- header -->
+    <header>
+        <a href="/" class="logo"><i class="fa-solid fa-file-pdf"></i></br>PDF TOOLS SUITE</a>
+        <nav class="navbar">
+            <div class="menu--sm">
+                <span class="menu--sm">
+                    <i class="ico ico--tools"></i></span>
+                <ul>
+                    <li><a href="home.html" class="active">HOME</a></li>
+                    <li><a href="public/login.html">LOGIN</a></li>
+                    <li><a href="public/signup.html">SIGN UP</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="fas fa-bars"></div>
+        <script src="auth.js"></script>
+    </header>
+    <!-- header end -->
+
+    <!--home section starts-->
+
+
+
+
+    <section class="home" id="home">
+
+        <div class="content">
+            <h1 class="heading">Welcome to PDF TOOLS</h1>
+            <p>Every tool you need to use PDFs, at your fingertips. All are 100% FREE and easy to use! Merge, split,
+                compress, convert, rotate, unlock and watermark PDFs with just a few clicks.
+            </p>
+
+        </div>
+
+        <div class="box-container">
+
+            <div class="box">
+                <i class="TWO"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 50 50">
+                    <path
+                        d="M17.676 34.344h9.55c2.477 0 3.375-.258 4.28-.742a5.04 5.04 0 0 0 2.098-2.102c.484-.902.742-1.8.742-4.277v-9.547H44.82c1.8 0 2.453.188 3.113.54s1.176.87 1.527 1.527.54 1.31.54 3.113V44.82c0 1.8-.187 2.453-.54 3.113a3.69 3.69 0 0 1-1.527 1.527c-.66.352-1.312.54-3.113.54H22.855c-1.8 0-2.453-.187-3.113-.54s-1.172-.87-1.527-1.527-.54-1.312-.54-3.113zm0 0"
+                        fill-rule="evenodd" fill="rgb(98.431373%,93.72549%,65.882353%)"></path>
+                    <path
+                        d="M43.94 37.137c0-.477-.395-.863-.883-.863s-.883.387-.883.863v3.844l-5.145-5.047c-.348-.34-.902-.34-1.25 0a.85.85 0 0 0-.258.609.86.86 0 0 0 .258.613l5.145 5.05h-3.914c-.488 0-.883.387-.883.867s.395.867.883.867h6.05c.113-.004.227-.023.336-.07a.87.87 0 0 0 .477-.465c.05-.105.066-.22.066-.332l.004-5.934zm0 0"
+                        fill="rgb(71.764706%,62.745098%,0.392157%)"></path>
+                    <g fill-rule="evenodd">
+                        <path
+                            d="M5.184 0h21.988c1.8 0 2.453.188 3.113.54.652.344 1.184.88 1.527 1.53.352.656.54 1.313.54 3.113v21.984c0 1.805-.187 2.457-.54 3.117-.344.648-.875 1.184-1.527 1.527-.66.352-1.312.54-3.113.54H5.184c-1.8 0-2.457-.187-3.113-.54-.652-.344-1.184-.88-1.527-1.527C.188 29.625 0 28.973 0 27.168V5.184c0-1.8.188-2.457.54-3.113.344-.652.88-1.184 1.53-1.53S3.383 0 5.184 0zm0 0"
+                            fill="rgb(83.921569%,74.901961%,17.647059%)"></path>
+                        <path
+                            d="M10.28 12.945v4.688c0 1.66-.926 2.66-2.707 2.66C5.406 20.293 5 18.852 5 18.07c0-.668.31-1.098.86-1.098.648 0 .813.504.813 1.05 0 .516.242.89.88.89.594 0 .926-.44.926-1.3V12.95c0-.54.352-.898.902-.898s.902.36.902.898zm1.672 6.402v-6.102c0-.8.418-1.055 1.055-1.055h2.762c1.516 0 2.738.75 2.738 2.508 0 1.44-1 2.508-2.75 2.508h-2v2.152c0 .54-.355.902-.902.902s-.902-.363-.902-.902zm1.805-5.773v2.242h1.68c.727 0 1.266-.437 1.266-1.12 0-.793-.56-1.12-1.45-1.12zm13.285 3.1v2.984c0 .332-.254.602-.613.602-.52 0-.66-.32-.773-1.023-.516.648-1.23 1.066-2.352 1.066-2.793 0-3.863-1.926-3.863-4.145 0-2.676 1.672-4.148 4.125-4.148 2.004 0 3.07 1.2 3.07 1.902 0 .63-.46.793-.848.793-.89 0-.56-1.242-2.32-1.242-1.242 0-2.223.813-2.223 2.816 0 1.56.77 2.637 2.246 2.637.957 0 1.793-.648 1.88-1.617H24.2c-.383 0-.812-.14-.812-.69 0-.44.254-.69.703-.69h2.223c.527 0 .738.262.738.758zm0 0"
+                            fill="rgb(100%,100%,100%)"></path>
+                    </g>
+                </svg>
+                <a href="convertPDF.html">
+                    <h3>JPG TO PDF</h3>
+                </a>
+                <p>Convert JPG images to PDF in seconds. Easily adjust orientation and margins.</p>
+            </div>
+            <div class="box">
+                <i class="ONE"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 50 50">
+                    <path
+                        d="M31.523 28h14.953c1.223 0 1.668.13 2.117.367.44.234.805.598 1.04 1.04.242.45.367.895.367 2.117v14.953c0 1.223-.13 1.668-.367 2.117-.234.44-.598.805-1.04 1.04-.45.242-.895.367-2.117.367H31.523c-1.223 0-1.668-.13-2.117-.367-.44-.234-.805-.598-1.04-1.04-.242-.45-.367-.895-.367-2.117V31.523c0-1.223.13-1.668.367-2.117.234-.44.598-.805 1.04-1.04.45-.242.895-.367 2.117-.367zm0-28h14.953c1.223 0 1.668.13 2.117.367.44.234.805.598 1.04 1.04.242.45.367.895.367 2.117v14.953c0 1.223-.13 1.668-.367 2.117-.234.44-.598.805-1.04 1.04-.45.242-.895.367-2.117.367H31.523c-1.223 0-1.668-.13-2.117-.367-.44-.234-.805-.598-1.04-1.04-.242-.45-.367-.895-.367-2.117V3.523c0-1.223.13-1.668.367-2.117.234-.44.598-.805 1.04-1.04C29.855.125 30.3 0 31.523 0zm-28 28h14.953c1.223 0 1.668.13 2.117.367.44.234.805.598 1.04 1.04.242.45.367.895.367 2.117v14.953c0 1.223-.13 1.668-.367 2.117-.234.44-.598.805-1.04 1.04-.45.242-.895.367-2.117.367H3.523c-1.223 0-1.668-.13-2.117-.367-.44-.234-.805-.598-1.04-1.04C.125 48.145 0 47.7 0 46.477V31.523c0-1.223.13-1.668.367-2.117.234-.44.598-.805 1.04-1.04.45-.242.895-.367 2.117-.367zm0-28h14.953c1.223 0 1.668.13 2.117.367.44.234.805.598 1.04 1.04.242.45.367.895.367 2.117v14.953c0 1.223-.13 1.668-.367 2.117-.234.44-.598.805-1.04 1.04-.45.242-.895.367-2.117.367H3.523c-1.223 0-1.668-.13-2.117-.367-.44-.234-.805-.598-1.04-1.04C.125 20.145 0 19.7 0 18.477V3.523C0 2.3.13 1.852.367 1.406A2.56 2.56 0 0 1 1.406.367C1.855.13 2.3 0 3.523 0zm0 0"
+                        fill-rule="evenodd" fill="rgb(56.078431%,73.72549%,36.470588%)"></path>
+                    <path
+                        d="M35 41.8c0 .48.398.867.883.867a.88.88 0 0 0 .883-.867v-3.844l5.145 5.05a.89.89 0 0 0 1.246 0 .85.85 0 0 0 .262-.613c0-.23-.094-.45-.262-.613l-5.14-5.047h3.914a.88.88 0 0 0 .883-.867c0-.48-.395-.867-.883-.867h-6.05c-.117 0-.23.023-.34.066-.215.086-.387.258-.477.47-.047.102-.066.22-.066.328zm7.3-26.387c.48 0 .867-.398.867-.883a.88.88 0 0 0-.867-.883h-3.844l5.05-5.14a.9.9 0 0 0 0-1.25.86.86 0 0 0-1.227 0l-5.047 5.148V8.492c0-.488-.39-.883-.867-.883a.87.87 0 0 0-.867.879v6.05c0 .113.023.23.066.336.086.215.254.387.47.477.105.047.215.07.332.07H42.3zM8.46 35c-.48 0-.867.398-.867.883s.387.883.867.883h3.844L7.254 41.9c-.34.348-.34.902 0 1.25a.86.86 0 0 0 .613.258c.23 0 .45-.094.613-.258l5.047-5.145v3.914c0 .488.387.883.867.883s.867-.402.867-.883v-6.05c0-.113-.023-.23-.066-.336-.086-.215-.258-.387-.47-.477a.82.82 0 0 0-.332-.07H8.46zm6.074-27.406c-.488 0-.883.387-.883.867v3.844l-5.145-5.05a.9.9 0 0 0-1.25 0A.86.86 0 0 0 7 7.867c0 .23.094.45.258.613l5.145 5.047H8.488c-.488 0-.883.387-.883.867s.402.867.883.867h6.05a.89.89 0 0 0 .336-.066c.215-.1.39-.258.477-.47.05-.102.07-.22.07-.332V8.46c0-.48-.395-.867-.883-.867zm0 0"
+                        fill="rgb(100%,100%,100%)"></path>
+                </svg>
+                <a href="o.html">
+                    <h3>COMPRESS PDF</h3>
+                </a>
+                <p>Reduce file size while optimizing for maximal IMAGE quality.</p>
+            </div>
+            <div class="box">
+                <i class="EIGHT"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 50 50"><path d="M32.324 15.656h-9.547c-2.477 0-3.375.258-4.28.742a5.04 5.04 0 0 0-2.098 2.102c-.484.902-.742 1.8-.742 4.277v9.547H5.18c-1.8 0-2.45-.187-3.113-.54-.648-.348-1.184-.88-1.527-1.527-.352-.66-.54-1.31-.54-3.113V5.18c0-1.8.188-2.45.54-3.113S1.4.89 2.066.54 3.38 0 5.18 0h21.965c1.8 0 2.453.188 3.113.54.648.344 1.18.88 1.527 1.527.352.66.54 1.313.54 3.113zm0 0" fill-rule="evenodd" fill="rgb(86.27451%,89.803922%,98.039216%)"></path><path d="M14.477 7.52a.88.88 0 0 0-.883-.867c-.48 0-.883.39-.883.867v3.844L7.566 6.316a.89.89 0 0 0-1.246 0c-.168.16-.258.38-.258.61s.1.453.258.613l5.145 5.05H7.547c-.488 0-.883.387-.883.863s.398.867.883.867h6.055a.92.92 0 0 0 .336-.066c.215-.086.387-.254.477-.47.05-.102.066-.215.066-.328l.004-5.938zm0 0" fill="rgb(16.078431%,34.117647%,58.431373%)"></path><path d="M22.855 17.676H44.82c1.8 0 2.45.188 3.113.543a3.68 3.68 0 0 1 1.527 1.523c.352.66.54 1.313.54 3.113V44.82c0 1.8-.187 2.45-.54 3.113s-.867 1.176-1.527 1.527-1.312.54-3.113.54H22.855c-1.8 0-2.453-.187-3.113-.54-.648-.344-1.18-.88-1.527-1.527-.352-.66-.54-1.312-.54-3.113V22.855c0-1.8.188-2.453.54-3.113.348-.648.88-1.18 1.527-1.527.66-.352 1.313-.54 3.113-.54zm0 0" fill-rule="evenodd" fill="rgb(37.254902%,51.372549%,77.647059%)"></path><path d="M38.996 26.75h2.965l-2.94 14.64h-3.094l-1.777-9.035-1.824 9.035H29.12L26.2 26.75h3.164l1.508 9.363 1.938-9.363h3.004l1.727 9.297zm0 0" fill="rgb(100%,100%,100%)"></path></svg>
+                <a href="PDFTOWORD.html">
+                    <h3>PDF TO WORD</h3>
+                </a>
+                <p>Easily convert your PDF files into easy to edit DOC and DOCX documents. The converted WORD document is almost 100% accurate.</p>
+            </div>
+            <div class="box">
+                <i class="THREE"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 50 50">
+                    <path
+                        d="M17.676 34.344h9.55c2.477 0 3.375-.258 4.28-.742a5.04 5.04 0 0 0 2.098-2.102c.484-.902.742-1.8.742-4.277v-9.547H44.82c1.8 0 2.453.188 3.113.54s1.176.87 1.527 1.527.54 1.31.54 3.113V44.82c0 1.8-.187 2.453-.54 3.113a3.69 3.69 0 0 1-1.527 1.527c-.66.352-1.312.54-3.113.54H22.855c-1.8 0-2.453-.187-3.113-.54s-1.172-.87-1.527-1.527-.54-1.312-.54-3.113zm0 0"
+                        fill-rule="evenodd" fill="rgb(37.254902%,51.372549%,77.647059%)"></path>
+                    <path
+                        d="M43.94 37.137c0-.477-.395-.863-.883-.863s-.883.387-.883.863v3.844l-5.145-5.047c-.348-.34-.902-.34-1.25 0a.85.85 0 0 0-.258.609.86.86 0 0 0 .258.613l5.145 5.05h-3.914c-.488 0-.883.387-.883.867s.395.867.883.867h6.05c.113-.004.227-.023.336-.07a.87.87 0 0 0 .477-.465c.05-.105.066-.22.066-.332l.004-5.934zm0 0"
+                        fill="rgb(100%,100%,100%)"></path>
+                    <path
+                        d="M27.145 32.324H5.18c-1.8 0-2.453-.187-3.113-.543S.89 30.914.54 30.254 0 28.95 0 27.145V5.18c0-1.8.188-2.453.54-3.113A3.69 3.69 0 0 1 2.066.539C2.727.188 3.38 0 5.18 0h21.965c1.8 0 2.453.188 3.113.54s1.172.87 1.527 1.527.54 1.313.54 3.113v21.965c0 1.8-.187 2.453-.54 3.113s-.87 1.176-1.527 1.527-1.312.54-3.113.54zm0 0"
+                        fill-rule="evenodd" fill="rgb(86.27451%,89.803922%,98.039216%)"></path>
+                    <path
+                        d="M20.844 8.61h2.96l-2.94 14.64H17.77l-1.777-9.035-1.824 9.035h-3.203L8.04 8.61h3.164l1.508 9.363 1.938-9.363h3.004l.04.203 1.688 9.1zm0 0"
+                        fill="rgb(16.078431%,34.117647%,58.431373%)"></path>
+                </svg>
+                <a href="word.html">
+                    <h3>WORD TO PDF</h3>
+                </a>
+                <p>Make DOC and DOCX files easy to read by converting them to PDF.</p>
+            </div>
+            <div class="box">
+                <i class="FOUR"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 50 50">
+                    <g fill="rgb(93.333333%,42.352941%,30.196078%)" fill-rule="evenodd">
+                        <path
+                            d="M5.488.363h21.75c1.78 0 2.43.184 3.082.535a3.66 3.66 0 0 1 1.512 1.512c.348.652.535 1.297.535 3.082v21.746c0 1.78-.187 2.43-.535 3.082a3.66 3.66 0 0 1-1.512 1.512c-.652.348-1.3.535-3.082.535H5.488c-1.78 0-2.43-.187-3.082-.535A3.66 3.66 0 0 1 .895 30.32c-.348-.652-.535-1.3-.535-3.082V5.488c0-1.78.188-2.43.535-3.082A3.71 3.71 0 0 1 2.406.895c.652-.348 1.3-.53 3.082-.53zm0 0">
+                        </path>
+                        <path
+                            d="M44.563 49.69H22.816c-1.78 0-2.43-.184-3.082-.535-.645-.34-1.172-.867-1.512-1.512-.348-.652-.535-1.297-.535-3.082V22.816c0-1.78.184-2.43.535-3.082.34-.645.867-1.172 1.512-1.512.652-.348 1.3-.535 3.082-.535h21.746c1.785 0 2.43.188 3.082.535.645.34 1.172.867 1.512 1.512.352.652.535 1.3.535 3.082v21.746c0 1.785-.184 2.43-.535 3.082-.34.645-.867 1.172-1.512 1.512-.652.352-1.297.535-3.082.535zm0 0">
+                        </path>
+                    </g>
+                    <path
+                        d="M17.906 10.965c-.484 0-.875.387-.875.86v3.8L9.84 8.523c-.344-.336-.895-.336-1.238 0-.164.16-.254.38-.254.605a.86.86 0 0 0 .254.6l7.195 7.098h-3.875c-.484 0-.875.387-.875.86s.4.86.875.86h5.984a.88.88 0 0 0 .332-.066.86.86 0 0 0 .473-.465.79.79 0 0 0 .066-.328v-5.87c.004-.473-.387-.86-.87-.86zm14.418 28.008c.48 0 .87-.383.87-.86v-3.797l7.195 7.098a.88.88 0 0 0 1.234 0 .85.85 0 0 0 .258-.605c0-.23-.094-.45-.258-.605l-7.2-7.102h3.875c.484 0 .875-.383.875-.86s-.4-.855-.875-.855h-5.984a.92.92 0 0 0-.336.066c-.2.086-.383.25-.473.46a.88.88 0 0 0-.066.328v5.87c0 .477.4.86.875.86zm-10.1-10.1c-.355.352-.93.352-1.285 0s-.355-.934 0-1.3a.91.91 0 0 1 1.285 0c.355.352.355.934 0 1.3zm3.374-3.357a.91.91 0 0 1-1.285 0 .91.91 0 0 1 0-1.285c.352-.352.93-.352 1.285 0a.91.91 0 0 1 0 1.285zm3.36-3.364a.91.91 0 0 1-1.285 0 .91.91 0 0 1 0-1.285.91.91 0 0 1 1.285 0 .91.91 0 0 1 0 1.285zm0 0"
+                        fill="rgb(100%,100%,100%)"></path>
+                </svg>
+                <a href="merge.html">
+                    <h3>MERGE PDF </h3>
+                </a>
+                <p>Combine PDFs in the order you want with the easiest PDF merger available.</p>
+            </div>
+
+            <div class="box">
+                <i class="fIVE"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 50 50">
+                    <g fill="rgb(93.333333%,42.352941%,30.196078%)" fill-rule="evenodd">
+                        <path
+                            d="M5.488.363h21.75c1.78 0 2.43.184 3.082.535a3.66 3.66 0 0 1 1.512 1.512c.348.652.535 1.297.535 3.082v21.746c0 1.78-.187 2.43-.535 3.082a3.66 3.66 0 0 1-1.512 1.512c-.652.348-1.3.535-3.082.535H5.488c-1.78 0-2.43-.187-3.082-.535A3.66 3.66 0 0 1 .895 30.32c-.348-.652-.535-1.3-.535-3.082V5.488c0-1.78.188-2.43.535-3.082A3.71 3.71 0 0 1 2.406.895c.652-.348 1.3-.53 3.082-.53zm0 0">
+                        </path>
+                        <path
+                            d="M44.563 49.69H22.816c-1.78 0-2.43-.184-3.082-.535-.645-.34-1.172-.867-1.512-1.512-.348-.652-.535-1.297-.535-3.082V22.816c0-1.78.184-2.43.535-3.082.34-.645.867-1.172 1.512-1.512.652-.348 1.3-.535 3.082-.535h21.746c1.785 0 2.43.188 3.082.535.645.34 1.172.867 1.512 1.512.352.652.535 1.3.535 3.082v21.746c0 1.785-.184 2.43-.535 3.082-.34.645-.867 1.172-1.512 1.512-.652.352-1.297.535-3.082.535zm0 0">
+                        </path>
+                    </g>
+                    <path
+                        d="M9.22 15.87c.484 0 .875-.387.875-.86v-3.8l7.195 7.102a.88.88 0 0 0 1.234 0 .85.85 0 0 0 0-1.215L11.328 10h3.875c.484 0 .875-.387.875-.86s-.4-.86-.875-.86H9.22a.88.88 0 0 0-.332.066.86.86 0 0 0-.539.793v5.875c0 .473.4.86.87.86zm31.793 18.2c-.484 0-.875.383-.875.855v3.8L32.94 31.63a.88.88 0 0 0-1.234 0c-.164.156-.258.375-.258.605a.85.85 0 0 0 .258.605l7.2 7.1H35.02c-.48 0-.87.387-.87.86a.86.86 0 0 0 .871.855H41a.88.88 0 0 0 .805-.527.86.86 0 0 0 .066-.328v-5.883a.87.87 0 0 0-.87-.855zm-18.78-5.187c-.355.352-.93.352-1.285 0s-.355-.934 0-1.3a.91.91 0 0 1 1.285 0c.355.352.355.934 0 1.3zm3.365-3.367a.91.91 0 0 1-1.285 0 .91.91 0 0 1 0-1.285c.352-.352.93-.352 1.285 0a.91.91 0 0 1 0 1.285zm3.36-3.364a.91.91 0 0 1-1.285 0 .91.91 0 0 1 0-1.285.91.91 0 0 1 1.285 0 .91.91 0 0 1 0 1.285zm0 0"
+                        fill="rgb(100%,100%,100%)"></path>
+                </svg>
+                <a href="split.html">
+                    <h3>SPLIT PDF</h3>
+                </a>
+                <p>Separate one page or a whole set for easy conversion into independent PDF files.</p>
+            </div>
+
+            <div class="box">
+                <i class="SIX"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 50 50" fill-rule="evenodd">
+                    <path
+                        d="M31.523 28h14.953c1.223 0 1.668.13 2.117.367.44.234.805.598 1.04 1.04.242.45.367.895.367 2.117v14.953c0 1.223-.13 1.668-.367 2.117-.234.44-.598.805-1.04 1.04-.45.242-.895.367-2.117.367H31.523c-1.223 0-1.668-.13-2.117-.367-.44-.234-.805-.598-1.04-1.04-.242-.45-.367-.895-.367-2.117V31.523c0-1.223.13-1.668.367-2.117.234-.44.598-.805 1.04-1.04.45-.242.895-.367 2.117-.367zm0-28h14.953c1.223 0 1.668.13 2.117.367.44.234.805.598 1.04 1.04.242.45.367.895.367 2.117v14.953c0 1.223-.13 1.668-.367 2.117-.234.44-.598.805-1.04 1.04-.45.242-.895.367-2.117.367H31.523c-1.223 0-1.668-.13-2.117-.367-.44-.234-.805-.598-1.04-1.04-.242-.45-.367-.895-.367-2.117V3.523c0-1.223.13-1.668.367-2.117.234-.44.598-.805 1.04-1.04C29.855.125 30.3 0 31.523 0zm-28 28h14.953c1.223 0 1.668.13 2.117.367.44.234.805.598 1.04 1.04.242.45.367.895.367 2.117v14.953c0 1.223-.13 1.668-.367 2.117-.234.44-.598.805-1.04 1.04-.45.242-.895.367-2.117.367H3.523c-1.223 0-1.668-.13-2.117-.367-.44-.234-.805-.598-1.04-1.04C.125 48.145 0 47.7 0 46.477V31.523c0-1.223.13-1.668.367-2.117.234-.44.598-.805 1.04-1.04.45-.242.895-.367 2.117-.367zm0-28h14.953c1.223 0 1.668.13 2.117.367.44.234.805.598 1.04 1.04.242.45.367.895.367 2.117v14.953c0 1.223-.13 1.668-.367 2.117-.234.44-.598.805-1.04 1.04-.45.242-.895.367-2.117.367H3.523c-1.223 0-1.668-.13-2.117-.367-.44-.234-.805-.598-1.04-1.04C.125 20.145 0 19.7 0 18.477V3.523C0 2.3.13 1.852.367 1.406A2.56 2.56 0 0 1 1.406.367C1.855.13 2.3 0 3.523 0zm0 0"
+                        fill="rgb(67.058824%,41.176471%,57.647059%)"></path>
+                    <path
+                        d="M10.34 14.27v-4.94H8.664c-.43 0-.664-.156-.664-.687 0-.484.262-.613.938-.742l.48-.105C10.86 7.48 10.457 6 11.566 6c.418 0 .754.184.754.883v7.387c0 .676-.258 1.14-.988 1.14s-.988-.465-.988-1.14zm27.31-.668h3.902c.492 0 .855.234.855.816s-.363.82-.96.82H36.57c-.754 0-1.066-.508-1.066-.96 0-.926.82-1.953 2.445-2.977 1.81-1.145 2.43-1.38 2.43-2.434 0-.848-.648-1.313-1.363-1.313-.832 0-1.39.34-1.676 1.38-.133.48-.3.727-.82.727-.535 0-.95-.22-.95-.87 0-1.586 1.56-2.8 3.47-2.8 2.082 0 3.316 1.367 3.316 2.563 0 1.73-.793 2.398-2.172 3.184-1.47.832-2.363 1.367-2.535 1.86zM7.5 41.664a.88.88 0 0 1 .922-.91c1.156 0 .535 1.598 2.328 1.598.977 0 1.5-.598 1.5-1.402 0-.625-.273-1.082-1.172-1.172-.363-.04-1.078-.102-1.078-.703 0-.676.39-.816 1.133-.855.648-.04.988-.418.988-1.016 0-.777-.613-1.145-1.3-1.145-1.574 0-1.21 1.484-2.234 1.484-.445 0-.87-.2-.87-.78 0-1.586 1.883-2.262 3.145-2.262 2.25 0 3.082 1.262 3.082 2.523 0 .832-.38 1.43-1.102 1.82.977.27 1.39 1.05 1.39 2.027 0 2.055-1.586 3.04-3.508 3.04-2.445 0-3.21-1.52-3.21-2.246zm31.75-1.484v-3.367h-.023l-2.512 3.367zm0 2.824v-1.34h-3.262c-.676 0-.988-.48-.988-.898 0-.336.078-.547.246-.766l4.004-5.137c.2-.258.48-.363.852-.363.703 0 .973.38.973.938v4.75h.652c.44 0 .727.31.727.738s-.285.742-.727.742h-.652v1.34c0 .547-.23.9-.9.9s-.906-.363-.906-.9zm0 0"
+                        fill="rgb(100%,100%,100%)"></path>
+                </svg>
+                <a href="NUM.html">
+                    <h3>ADD NUMBERS TO PDF</h3>
+                </a>
+                <p>Add page numbers into PDFs with ease. Choose your positions, dimensions, typography.</p>
+            </div>
+
+            <div class="box">
+                <i class="SEVEN"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 100 100">
+                    <path
+                        d="M16.024 0h67.95c5.572 0 7.593.58 9.63 1.67s3.636 2.688 4.725 4.725 1.67 4.058 1.67 9.63v67.95c0 5.572-.58 7.593-1.67 9.63s-2.688 3.636-4.725 4.725-4.058 1.67-9.63 1.67h-67.95c-5.572 0-7.593-.58-9.63-1.67S2.76 95.642 1.67 93.605 0 89.548 0 83.976v-67.95c0-5.572.58-7.593 1.67-9.63S4.358 2.76 6.395 1.67 10.452 0 16.024 0z"
+                        fill="#4A7AAB"></path>
+                    <g fill="#fff">
+                        <path
+                            d="M49.485 21.715a2.5 2.5 0 0 1 2.031 0l21.5 9.556a2.5 2.5 0 0 1 1.485 2.285V47.89c0 14.445-10 27.82-23.407 31.095a2.5 2.5 0 0 1-1.186 0C36.5 75.708 26.5 62.334 26.5 47.89V33.556a2.5 2.5 0 0 1 1.485-2.285l21.5-9.556zM31.5 35.18v12.71c0 11.97 8.165 23.116 19 26.084 10.835-2.968 19-14.113 19-26.084V35.18l-19-8.444-19 8.444z"
+                            fill-rule="nonzero"></path>
+                        <path
+                            d="M53.89 58.493h-7.713l1.178-9.56c-1.136-.798-1.874-2.088-1.874-3.546 0-2.422 2.038-4.386 4.553-4.386s4.553 1.964 4.553 4.386c0 1.457-.738 2.748-1.874 3.546l1.176 9.56z">
+                        </path>
+                    </g>
+                </svg>
+                <a href="Templates/index.html">
+                <h3>PROTECT PDF</h3></a>
+                <p>Protect PDF files with a password. Encrypt PDF documents to prevent unauthorized access. </p>
+            </div>
+            
+        </div>
+
+    </section>
+
+
+    <!--home section ends-->
+    <section class="footer">
+        <p>© PDF Tools 2025 ® - Your PDF Editor</p>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            $('.fa-bars').click(function () {
+                $(this).toggleClass('fa-times');
+                $('.navbar').toggleClass('nav-toggle');
+            });
+
+            $(window).on('scroll load', function () {
+
+                $('.fa-bars').removeClass('fa-times');
+                $('.navbar').removeClass('nav-toggle');
+
+                if ($(window).scrollTop() > 30) {
+                    $('header').addClass('header-active');
+                } else {
+                    $('header').removeClass('header-active');
+                }
+            });
+
+        });
+    </script>
+</body>
+
+
+</html>

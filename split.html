@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split PDF - PDF Tool Suite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/pdf-lib.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+        :root {
+            --background: #fefae0;
+            --box:  #fffbc7;
+            --text: #444444;
+            --secondary: #faedcd;
+            --button:#9ab491;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --border-glow: rgba(255, 0, 255, 0.8);
+        }
+
+        * {
+            font-family: 'Roboto', sans-serif;
+            text-transform: capitalize;
+            text-decoration: none;
+            outline: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        *::selection {
+            background: var(--background);
+            color: #fff;
+        }
+
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: url(one.jpg) no-repeat center center fixed;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        header {
+            width: 96%;
+            height: 10%;
+            background: var(--box);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 10px;
+            color: black;
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            z-index: 1000;
+            transition: 0.3s ease-in-out;
+        }
+
+        header:hover {
+            box-shadow: 0 0 10px;
+        }
+
+        .header-active {
+            top: 0;
+            width: 100%;
+            border-radius: 0;
+            box-shadow: 0 .1rem .3rem rgba(0, 0, 0, .3);
+        }
+
+        header .navbar ul {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            list-style: none;
+
+        }
+
+        header .navbar ul li {
+            margin: 0 1rem;
+        }
+
+        header .navbar ul li a {
+            color: var(--text);
+            font-size: 2rem;
+            font-weight: 600;
+            transition: color 0.3s ease-in-out;
+        }
+
+        header .navbar ul li a.active,
+        header .navbar ul li a:hover {
+            color: var(--button);
+        }
+
+        header .logo {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        header .logo i {
+            height: 10px;
+            padding: 4 .2rem;
+            color: #df4747;
+
+        }
+
+        header .fa-bars {
+            font-size: 3rem;
+            color: var(--text);
+            cursor: pointer;
+            display: none;
+            transition: .2s;
+        }
+
+        .container {
+            max-width: 500px;
+            height: 350px;
+            margin: 200px auto;
+            position: relative;
+            top: 20px;
+            background: var(--box);
+            box-shadow: 0 0 10px black;
+            border: 3px dashed #000000;
+            color: #000000;
+            padding: 100px;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+
+        .container h2 {
+            color: var(--text);
+            margin: 20px;
+            margin-top: -20px;
+
+        }
+
+        input[type="file"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 20px -10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        label {
+            background-color: var(--button);
+            color: #000;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+        }
+        label:hover {
+            background-color: #f3deaa;
+            box-shadow: 0 0 10px black;
+        }
+
+        button {
+            background-color: var(--button);
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #f3deaa;
+            box-shadow: 0 0 10px black;
+        }
+
+        header .fa-times {
+            transform: rotate(180deg);
+            color:var(--text) ;
+        }
+
+
+        @media (max-width: 768px) {
+            html {
+                font-size: 55%;
+            }
+
+            header .fa-bars {
+                display: block;
+            }
+
+            header .fa-bars.fa-times {
+                color: var(--neon-blue);
+            }
+
+            header .navbar {
+                position: fixed;
+                top: -100rem;
+                left: 0;
+                width: 100%;
+                background: var(--box);
+                box-shadow: 0 0 10px;
+                color: black;
+                backdrop-filter: blur(10px);
+                border-radius: 1rem;
+                opacity: 0;
+                transition: .2s linear;
+            }
+
+            header .navbar ul {
+                flex-flow: column;
+                padding: 2rem 0;
+            }
+
+            header .navbar ul li {
+                margin: 1rem 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            header .navbar ul li a {
+                color: var(--text);
+                background-color: var(--background-light);
+                font-size: 2.5rem;
+                display: block;
+            }
+
+            header .nav-toggle {
+                top: 7.9em;
+                opacity: 1;
+                border-radius: 3rem;
+            }
+
+            .container {
+                max-width: 400px;
+                height: 350px;
+            }
+            .container h2 {
+                font-size: 2rem;
+            }
+
+
+            .home .content p {
+                padding: 1.5rem 2rem;
+            }
+
+            .home::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href=" " class="logo"><i class="fa-solid fa-file-pdf"></i></br>
+            PDF TOOLS SUITE</a>
+        <nav class="navbar">
+            <div class="menu--sm">
+                <span class="menu--sm">
+                    <i class="ico ico--tools"></i></span>
+                <ul>
+                    <li><a href="home.html">HOME</a></li>
+                    <li><a href="convertPDF.html">CONVERT PDF</a></li>
+                    <li><a href="o.html">COMPRESS IMAGE</a></li>
+                    <li><a href="merge.html">MERGE PDF</a></li>
+                    <li><a href="split.html" class="active">SPLIT PDF</a></li>
+                    <li><a href="allpdf.html">ALL PDF TOOLS</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="fas fa-bars"></div>
+    </header>
+    <div class="container">
+        <h2><i class="fa-solid fa-file-pdf"></i> Split PDF</h2>
+        <label for="pdfFile" class="button"><i class="fa-solid fa-file-pdf"></i> Choose File</label>
+        <input type="file" id="pdfFile" accept="application/pdf" style="display: none;">
+        <input type="number" id="splitPage" placeholder="Enter page number to split after">
+        <button onclick="splitPDF()">Split PDF</button>
+        <br>
+        <button id="downloadPart1" style="display: none;">Download Part 1</button>
+        <button id="downloadPart2" style="display: none;">Download Part 2</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+
+    <script>
+        let part1PDF, part2PDF;
+        async function splitPDF() {
+            const fileInput = document.getElementById('pdfFile');
+            const splitPage = parseInt(document.getElementById('splitPage').value);
+            if (!fileInput.files.length || isNaN(splitPage)) {
+                alert('Please select a PDF and enter a valid page number.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            reader.readAsArrayBuffer(file);
+
+            reader.onload = async function () {
+                const pdfBytes = new Uint8Array(reader.result);
+                const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+                const totalPages = pdfDoc.getPageCount();
+
+                if (splitPage < 1 || splitPage >= totalPages) {
+                    alert(`Enter a page number between 1 and ${totalPages - 1}`);
+                    return;
+                }
+
+                const firstHalf = await PDFLib.PDFDocument.create();
+                const secondHalf = await PDFLib.PDFDocument.create();
+
+                for (let i = 0; i < splitPage; i++) {
+                    const [copiedPage] = await firstHalf.copyPages(pdfDoc, [i]);
+                    firstHalf.addPage(copiedPage);
+                }
+                for (let i = splitPage; i < totalPages; i++) {
+                    const [copiedPage] = await secondHalf.copyPages(pdfDoc, [i]);
+                    secondHalf.addPage(copiedPage);
+                }
+
+                part1PDF = await firstHalf.save();
+                part2PDF = await secondHalf.save();
+
+                document.getElementById('downloadPart1').style.display = 'inline-block';
+                document.getElementById('downloadPart2').style.display = 'inline-block';
+            };
+        }
+
+        document.getElementById('downloadPart1').addEventListener('click', function () {
+            downloadPDF(part1PDF, 'Part_1.pdf');
+        });
+        document.getElementById('downloadPart2').addEventListener('click', function () {
+            downloadPDF(part2PDF, 'Part_2.pdf');
+        });
+
+        function downloadPDF(pdfBytes, fileName) {
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            URL.revokeObjectURL(link.href);
+            document.body.removeChild(link);
+        }
+        $(document).ready(function() {
+
+$('.fa-bars').click(function() {
+    $(this).toggleClass('fa-times');
+    $('.navbar').toggleClass('nav-toggle');
+});
+
+$(window).on('scroll load', function() {
+
+    $('.fa-bars').removeClass('fa-times');
+    $('.navbar').removeClass('nav-toggle');
+
+    if($(window).scrollTop() > 30) {
+        $('header').addClass('header-active');
+    } else {
+        $('header').removeClass('header-active');
+    }
+});
+
+});
+    </script>
+</body>
+
+</html>

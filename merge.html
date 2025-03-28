@@ -1,0 +1,495 @@
+<!--this is the final code of merge pdf -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge PDF - PDF Tool Suite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/pdf-lib.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+        :root {
+            --background: #fefae0;
+            --box:  #fffbc7;
+            --text: #444444;
+            --secondary: #faedcd;
+            --button:#9ab491;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --border-glow: rgba(255, 0, 255, 0.8);
+        }
+
+        * {
+            font-family: 'Roboto', sans-serif;
+            text-transform: capitalize;
+            text-decoration: none;
+            outline: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        *::selection {
+            background: var(--pink);
+            color: #fff;
+        }
+
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+        }
+
+        header {
+            width: 96%;
+            height: 10%;
+            background: var(--box);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 10px;
+            color: black;
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            z-index: 1000;
+            transition: 0.3s ease-in-out;
+        }
+
+        header:hover {
+            box-shadow: 0 0 10px;
+        }
+
+        .header-active {
+            top: 0;
+            width: 100%;
+            border-radius: 0;
+            box-shadow: 0 .1rem .3rem rgba(0, 0, 0, .3);
+        }
+
+        header .navbar ul {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            list-style: none;
+
+        }
+
+        header .navbar ul li {
+            margin: 0 1rem;
+        }
+
+
+        .navbar li {
+            float: left;
+        }
+
+        .navbar li a,
+        .dropbtn {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        
+        }
+        /* Dropdown styles */
+        li.dropdown {
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--box);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Dropdown arrow styles */
+        .arrow {
+            font-size: 0.8em;
+            /* Adjust the size of the arrow */
+            margin-left: 5px;
+            /* Space between text and arrow */
+        }
+
+        header .navbar ul li a {
+            color: var(--text);
+            font-size: 2rem;
+            font-weight: 600;
+            transition: color 0.3s ease-in-out;
+        }
+
+        header .navbar ul li a.active,
+        header .navbar ul li a:hover {
+            color: var(--button);
+        }
+
+        header .logo {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        header .logo i {
+            height: 10px;
+            padding: 4 .2rem;
+            color: #df4747;
+
+        }
+
+        header .fa-bars {
+            font-size: 3rem;
+            color: var(--text);
+            cursor: pointer;
+            display: none;
+            transition: .2s;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: url(one.jpg) no-repeat center center fixed;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 1000px;
+        }
+
+        #drop-area {
+            width: 500px;
+            height: 350px;
+            border: 3px dashed #000000;
+            padding: 20px;
+            margin: 30px auto;
+            margin-top: 150px;
+            background-color: var(--box);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: black;
+        }
+
+        #drop-area p {
+            color: #373d3b;
+            font-weight: bold;
+            font-size: medium;
+        }
+
+        #drop-area .button {
+            color: #373d3b;
+        }
+
+        label {
+            background-color: var(--button);
+            transition: all 0.3s ease-in-out;
+            color: #fff;
+            padding: 10px 15px;
+            position: relative;
+            cursor: pointer;
+            top: 70px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        label:hover {
+            background-color: #f3deaa;
+            box-shadow: 0 0 10px black;
+        }
+
+        button {
+            background-color: var(--button);
+            transition: all 0.3s ease-in-out;
+            color: var(--text);
+            padding: 10px 15px;
+            position: relative;
+            top: 100px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #f3deaa;
+            box-shadow: 0 0 10px black;
+        }
+
+        #file-list {
+            margin-top: 5px;
+            font-weight: bold;
+            position: relative;
+            top: 90px;
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        merge-btn {
+            background-color: #FF9AE3;
+            color: black;
+            padding: 10px 15px;
+            position: 20px;
+            top: 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        header .fa-times {
+            transform: rotate(180deg);
+            color: var(--text);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header,
+        #drop-area,
+        button,
+        label {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+
+        @media (max-width: 768px) {
+            html {
+                font-size: 55%;
+            }
+
+            header .fa-bars {
+                display: block;
+            }
+
+            header .navbar {
+                position: fixed;
+                top: -100rem;
+                left: 0;
+                width: 100%;
+                height: 450px;
+                background: var(--box);
+                border-radius: 1rem;
+                opacity: 0;
+                transition: .2s linear;
+            }
+
+            header .navbar ul {
+                flex-flow: column;
+                padding: 2rem 0;
+            }
+
+            header .navbar ul li {
+                margin: 1rem 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            header .navbar ul li a {
+                font-size: 2.5rem;
+                display: block;
+            }
+
+            header .nav-toggle {
+                top: 7.9rem;
+                opacity: 1;
+                border-radius: 3rem;
+                height: 450px;
+            }
+            #drop-area {
+                width: 450px;
+                height: 350px;
+                margin-top: 170px;
+            }
+
+            .home .content p {
+                padding: 1.5rem 2rem;
+            }
+
+            .home::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="#" class="logo"><i class="fa-solid fa-file-pdf"></i> PDF TOOLS SUITE</a>
+        <nav class="navbar">
+            <ul>
+                <li><a href="home.html">HOME</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropbtn">CONVERT PDF <span class="arrow">▼</span></a>
+                    <div class="dropdown-content">
+                        <a href="convertPDF.html">JPG TO PDF</a>
+                        <a href="word.html">WORD TO PDF</a>
+                        <a href="PDFWord.html">PDF TO WORD</a>
+                    </div>
+                </li>
+                <li><a href="o.html">COMPRESS IMAGE</a></li>
+                <li><a href="merge.html" class="active">MERGE PDF</a></li>
+                <li><a href="split.html">SPLIT PDF</a></li>
+                <li><a href="allpdf.html">ALL PDF TOOLS</a></li>
+            </ul>
+        </nav>
+        <div class="fas fa-bars"></div>
+    </header>
+    <div id="drop-area">
+        <p>Drag & drop PDF files here or click to select</p>
+        <div class="button">
+            <label for="pdfFile" class="button"><i class="fa-solid fa-file-pdf"></i> Choose File</label>
+            <input type="file" id="pdfFile" accept="application/pdf" multiple style="display: none;"><br>
+            <ul id="file-list">No Files Selected</ul><br>
+            <button id="merge-btn">Merge PDFs</button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const fileInput = document.getElementById('pdfFile');
+        const fileList = document.getElementById('file-list'); // Corrected ID
+        const mergeBtn = document.getElementById('merge-btn');
+        const dropArea = document.getElementById('drop-area');
+        let pdfFiles = [];
+
+        // Prevent default drag behaviors
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        // Highlight drop area when a file is dragged over it
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, () => dropArea.classList.add('highlight'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, () => dropArea.classList.remove('highlight'), false);
+        });
+
+        // Handle dropped files
+        dropArea.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+
+        // Handle file selection (both drag-and-drop and file input)
+        function handleFiles(files) {
+            pdfFiles = Array.from(files);
+            fileList.innerHTML = "";
+            pdfFiles.forEach(file => {
+                let li = document.createElement('li');
+                li.textContent = file.name;
+                fileList.appendChild(li);
+            });
+        }
+
+
+        fileInput.addEventListener('change', (event) => {
+            pdfFiles = Array.from(event.target.files);
+            fileList.innerHTML = "";
+            pdfFiles.forEach(file => {
+                let li = document.createElement('li');
+                li.textContent = file.name;
+                fileList.appendChild(li);
+            })
+        });
+
+        mergeBtn.addEventListener('click', async () => {
+            if (pdfFiles.length < 2) {
+                alert("Please select at least two PDF files to merge.");
+                return;
+            }
+
+            try {
+                const { PDFDocument } = PDFLib;
+                const mergedPdf = await PDFDocument.create();
+
+                for (const file of pdfFiles) {
+                    const arrayBuffer = await file.arrayBuffer();
+                    const pdfDoc = await PDFDocument.load(arrayBuffer);
+                    const copiedPages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
+                    copiedPages.forEach(page => mergedPdf.addPage(page));
+                }
+
+                const mergedPdfBytes = await mergedPdf.save();
+                const blob = new Blob([mergedPdfBytes], { type: "application/pdf" });
+                const url = URL.createObjectURL(blob);
+
+                // Creating a download link dynamically
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'merged.pdf';
+                document.body.appendChild(a); // Append to body
+                a.click();
+                document.body.removeChild(a); // Remove after clicking
+                URL.revokeObjectURL(url); // Clean up memory
+
+            } catch (error) {
+                console.error("Error merging PDFs:", error);
+                alert("An error occurred while merging PDFs.");
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.fa-bars').click(function () {
+                $(this).toggleClass('fa-times');
+                $('.navbar').toggleClass('nav-toggle');
+            });
+
+            $(window).on('scroll load', function () {
+                $('.fa-bars').removeClass('fa-times');
+                $('.navbar').removeClass('nav-toggle');
+
+                if ($(window).scrollTop() > 30) {
+                    $('header').addClass('header-active');
+                } else {
+                    $('header').removeClass('header-active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
