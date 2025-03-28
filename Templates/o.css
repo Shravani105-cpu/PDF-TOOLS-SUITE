@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --pink: #ff046f;
+  --violet: #c638fa;
+}
+
+* {
+  font-family: 'Roboto', sans-serif;
+  text-transform: capitalize;
+  text-decoration: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*::selection {
+  background: var(--pink);
+  color: #fff;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+}
+
+header {
+  width: 96%;
+  height: 10%;
+  background: #fff;
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  z-index: 1000;
+  transition: .2s;
+}
+
+.header-active {
+  top: 0;
+  width: 100%;
+  border-radius: 0;
+  box-shadow: 0 .1rem .3rem rgba(0, 0, 0, .3);
+}
+
+header .navbar ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+
+}
+
+header .navbar ul li {
+  margin: 0 1rem;
+}
+
+header .navbar ul li a {
+  color: var(--pink);
+  font-size: 2rem;
+  font-weight: 500;
+  transition: .2s;
+}
+
+header .navbar ul li a.active,
+header .navbar ul li a:hover {
+  color: var(--violet);
+}
+
+header .logo {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--pink);
+}
+
+header .logo i {
+  height: 10px;
+  padding: 4 .2rem;
+  ;
+  color: var(--pink);
+
+}
+
+header .fa-bars {
+  font-size: 3rem;
+  color: #ff046f;
+  cursor: pointer;
+  display: none;
+  transition: .2s;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 50px;
+  background-color: #c638fa;
+  /* Background color */
+  color: white;
+}
+
+
+.wrapper {
+  width: 450px;
+  height: 288px;
+  padding: 30px;
+  background: #ff046f;
+  border-radius: 9px;
+  transition:  0.2s ease;
+  margin: 230px;
+}
+
+.wrapper.active {
+  height: 537px;
+}
+
+.wrapper .upload-box {
+  height: 225px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 5px;
+  border: 2px dashed #afafaf;
+}
+
+.wrapper.active .upload-box {
+  border: none;
+}
+
+.upload-box p {
+  font-size: 1.06rem;
+  margin-top: 20px;
+}
+
+.wrapper.active .upload-box p {
+  display: none;
+}
+
+.wrapper.active .upload-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.wrapper .content {
+  opacity: 0;
+  margin-top: 28px;
+  pointer-events: none;
+}
+
+.wrapper.active .content {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.5s 0.05s ease;
+}
+
+.content .row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.content .row .column {
+  width: calc(100% / 2 - 15px);
+}
+
+.row .column label {
+  font-size: 1.06rem;
+}
+
+.sizes .column input {
+  width: 100%;
+  height: 49px;
+  outline: none;
+  margin-top: 7px;
+  padding: 0 15px;
+  font-size: 1.06rem;
+  border-radius: 4px;
+  border: 1px solid #aaa;
+}
+
+.sizes .column input:focus {
+  padding: 0 14px;
+  border: 2px solid #927dfc;
+}
+
+.content .checkboxes {
+  margin-top: 20px;
+}
+
+.checkboxes .column {
+  display: flex;
+  align-items: center;
+}
+
+.checkboxes .column input {
+  width: 17px;
+  height: 17px;
+  margin-right: 9px;
+  accent-color: #927dfc;
+}
+
+.content .download-btn {
+  width: 100%;
+  color: #000;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.06rem;
+  border-radius: 5px;
+  padding: 15px 0;
+  margin: 30px 0 10px;
+  background: #ff9ae3;
+  text-transform: uppercase;
+}
+
+header .fa-times {
+  transform: rotate(180deg);
+  color: #c638fa;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 55%;
+  }
+
+
+  header .fa-bars {
+    display: block;
+  }
+
+  header .navbar {
+    position: fixed;
+    top: -100rem;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-radius: 1rem;
+    opacity: 0;
+    transition: .2s linear;
+  }
+
+  header .navbar ul {
+    flex-flow: column;
+    padding: 2rem 0;
+  }
+
+  header .navbar ul li {
+    margin: 1rem 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  header .navbar ul li a {
+    font-size: 3rem;
+    display: block;
+  }
+
+  header .nav-toggle {
+    top: 5.5em;
+    opacity: 1;
+  }
+
+  .wrapper {
+    width: 70%;
+    height: 50;
+  }
+
+  .upload-box p {
+    font-size: 10px;
+  }
+}
